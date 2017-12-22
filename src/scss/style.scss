@@ -1,0 +1,31 @@
+$size: 50px;
+*{
+  box-sizing: border-box;
+}
+.container{
+  width: 1000px;
+  margin: 0 auto;
+  // border: 2px solid blue;
+}
+.word{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: ($size+10)*4;
+  border: 2px solid #fc4d4d;
+  border-radius: 10px;
+  background-color: #fa676770;
+}
+.letter{
+  width: $size;
+  height: $size;
+  border: 2px solid green;
+  border-radius: 10%;
+  background-color: rgb(213, 250, 206);
+  margin: 5px 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $size/2;
+  font-weight: 700;
+}
