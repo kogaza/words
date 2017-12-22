@@ -9619,15 +9619,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = {
+      word: ""
+    };
+    return _this;
   }
 
   _createClass(App, [{
     key: 'render',
     value: function render() {
+      // robimy kopien z aktualnego state
+      var newState = JSON.parse(JSON.stringify(this.state));
+
+      newState.word = prompt("podaj włowo").toUpperCase();
+
+      var word = newState.word.split("");
       return _react2.default.createElement(
         'div',
         { className: 'container' },
@@ -9646,32 +9657,19 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'h2',
             null,
-            'KORA'
+            word
           )
         ),
         _react2.default.createElement(
           'div',
           { className: 'word' },
-          _react2.default.createElement(
-            'div',
-            { className: 'letter' },
-            'K'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'letter' },
-            'O'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'letter' },
-            'R'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'letter' },
-            'A'
-          )
+          word.map(function (p, i) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'letter', key: i },
+              word[i]
+            );
+          })
         )
       );
     }

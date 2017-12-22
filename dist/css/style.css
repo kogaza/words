@@ -2,14 +2,14 @@
   box-sizing: border-box; }
 
 .container {
-  width: 1000px;
+  max-width: 1000px;
   margin: 0 auto; }
 
 .word {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 240px;
+  flex-wrap: wrap;
   border: 2px solid #fc4d4d;
   border-radius: 10px;
   background-color: #fa676770; }
