@@ -20,8 +20,6 @@ class RandomWord extends React.Component {
       randomWord.push(wordArray.splice(nr,1)[0]);
       i--;      
     }
-
-    // const word = word.split("");
     
     return <div className="container">
       <div>
@@ -36,6 +34,7 @@ class RandomWord extends React.Component {
             {randomWord[i]}
             </div>
           )}
+          <div className="letter"></div>
 
       </div>
 

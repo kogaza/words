@@ -22188,8 +22188,6 @@ var RandomWord = function (_React$Component) {
         i--;
       }
 
-      // const word = word.split("");
-
       return _react2.default.createElement(
         'div',
         { className: 'container' },
@@ -22220,7 +22218,8 @@ var RandomWord = function (_React$Component) {
               { className: 'letter', key: i },
               randomWord[i]
             );
-          })
+          }),
+          _react2.default.createElement('div', { className: 'letter' })
         )
       );
     }
