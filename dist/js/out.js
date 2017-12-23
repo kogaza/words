@@ -9608,6 +9608,10 @@ var _reactDom = __webpack_require__(99);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _RandomWord = __webpack_require__(190);
+
+var _RandomWord2 = _interopRequireDefault(_RandomWord);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9633,45 +9637,10 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      // robimy kopien z aktualnego state
-      var newState = JSON.parse(JSON.stringify(this.state));
 
-      newState.word = prompt("podaj włowo").toUpperCase();
-
-      var word = newState.word.split("");
-      return _react2.default.createElement(
-        'div',
-        { className: 'container' },
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'h1',
-            null,
-            'Zapisz s\u0142owo'
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'what-word' },
-          _react2.default.createElement(
-            'h2',
-            null,
-            word
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'word' },
-          word.map(function (p, i) {
-            return _react2.default.createElement(
-              'div',
-              { className: 'letter', key: i },
-              word[i]
-            );
-          })
-        )
-      );
+      return _react2.default.createElement(_RandomWord2.default, {
+        word: this.state.word
+      });
     }
   }]);
 
@@ -22160,6 +22129,107 @@ module.exports = ReactDOMInvalidARIAHook;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(83);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(99);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RandomWord = function (_React$Component) {
+  _inherits(RandomWord, _React$Component);
+
+  function RandomWord() {
+    _classCallCheck(this, RandomWord);
+
+    return _possibleConstructorReturn(this, (RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).apply(this, arguments));
+  }
+
+  _createClass(RandomWord, [{
+    key: 'render',
+    value: function render() {
+      // a copy of the current state
+      // const word = JSON.parse(JSON.stringify(this.props.word));
+
+      var word = prompt("podaj słowo").toUpperCase();
+
+      // random distribution of array elements
+      var i = word.length;
+      var j = i - 1;
+      var randomWord = [];
+      var wordArray = word.split("");
+
+      while (i > 0) {
+        var nr = Math.round(Math.random() * j--);
+        randomWord.push(wordArray.splice(nr, 1)[0]);
+        i--;
+      }
+
+      // const word = word.split("");
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Zapisz s\u0142owo'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'what-word' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            word
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'word' },
+          randomWord.map(function (p, i) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'letter', key: i },
+              randomWord[i]
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return RandomWord;
+}(_react2.default.Component);
+
+module.exports = RandomWord;
 
 /***/ })
 /******/ ]);
