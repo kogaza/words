@@ -26,3 +26,6 @@
   align-items: center;
   font-size: 25px;
   font-weight: 700; }
+
+.drag {
+  background-color: blue; }

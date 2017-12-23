@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 
 class RandomWord extends React.Component {
 
+  handleClickField = (field) => {
+    this.props.clickField(field);
+  }
+  
   render(){
-    // a copy of the current state
-    // const word = JSON.parse(JSON.stringify(this.props.word));
 
-    const word = prompt("podaj słowo").toUpperCase();
+    const classField = this.props.classNames.join(" ");
+
+    const word = this.props.word.toUpperCase();
 
     // random distribution of array elements
     let i = word.length;
@@ -30,11 +34,21 @@ class RandomWord extends React.Component {
       </div>
       <div className="word">
         {
-          randomWord.map((p,i) => <div className="letter" key={i}>
-            {randomWord[i]}
-            </div>
-          )}
-          <div className="letter"></div>
+          randomWord.map((p,i) => {
+            return (
+              <div
+                className={classField} 
+                key={i} 
+                onMouseDown={(p)=>this.handleClickField(p)}>
+                  {randomWord[i]}
+              </div>
+            )
+          })
+        }
+          <div
+            className={classField}
+            onMouseDown={(p)=>this.handleClickField(p)}>
+          </div>
 
       </div>
 

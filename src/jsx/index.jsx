@@ -6,8 +6,27 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      word: ""
+      word: "",
+      classField: ["letter"]
     }
+  }
+
+  componentWillMount = () => {
+    const newState = JSON.parse(JSON.stringify(this.state));
+
+    newState.word = prompt("podaj słowo"); 
+    this.setState(newState);
+  
+  }
+
+  clickField = (indexElem) => {
+
+    const newState = JSON.parse(JSON.stringify(this.state));
+
+    console.log("Działa kliknięcie");
+    newState.classField.push("drag");//works for everyone!!! WRONG
+
+    this.setState(newState);
   }
 
   render(){
@@ -15,6 +34,8 @@ class App extends React.Component {
     return (
       <RandomWord 
         word={this.state.word}
+        classNames={this.state.classField}
+        clickField={(id) => this.clickField(id)}
       />
     )
   }

@@ -9628,8 +9628,26 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    _this.componentWillMount = function () {
+      var newState = JSON.parse(JSON.stringify(_this.state));
+
+      newState.word = prompt("podaj słowo");
+      _this.setState(newState);
+    };
+
+    _this.clickField = function (indexElem) {
+
+      var newState = JSON.parse(JSON.stringify(_this.state));
+
+      console.log("Działa kliknięcie");
+      newState.classField.push("drag"); //works for everyone!!! WRONG
+
+      _this.setState(newState);
+    };
+
     _this.state = {
-      word: ""
+      word: "",
+      classField: ["letter"]
     };
     return _this;
   }
@@ -9637,9 +9655,14 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
 
       return _react2.default.createElement(_RandomWord2.default, {
-        word: this.state.word
+        word: this.state.word,
+        classNames: this.state.classField,
+        clickField: function clickField(id) {
+          return _this2.clickField(id);
+        }
       });
     }
   }]);
@@ -22163,18 +22186,29 @@ var RandomWord = function (_React$Component) {
   _inherits(RandomWord, _React$Component);
 
   function RandomWord() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, RandomWord);
 
-    return _possibleConstructorReturn(this, (RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickField = function (field) {
+      _this.props.clickField(field);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(RandomWord, [{
     key: 'render',
     value: function render() {
-      // a copy of the current state
-      // const word = JSON.parse(JSON.stringify(this.props.word));
+      var _this2 = this;
 
-      var word = prompt("podaj słowo").toUpperCase();
+      var classField = this.props.classNames.join(" ");
+
+      var word = this.props.word.toUpperCase();
 
       // random distribution of array elements
       var i = word.length;
@@ -22215,11 +22249,20 @@ var RandomWord = function (_React$Component) {
           randomWord.map(function (p, i) {
             return _react2.default.createElement(
               'div',
-              { className: 'letter', key: i },
+              {
+                className: classField,
+                key: i,
+                onMouseDown: function onMouseDown(p) {
+                  return _this2.handleClickField(p);
+                } },
               randomWord[i]
             );
           }),
-          _react2.default.createElement('div', { className: 'letter' })
+          _react2.default.createElement('div', {
+            className: classField,
+            onMouseDown: function onMouseDown(p) {
+              return _this2.handleClickField(p);
+            } })
         )
       );
     }
