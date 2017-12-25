@@ -6,20 +6,18 @@ class RandomWord extends React.Component {
 
   handleClickField = (field) => {
     this.props.clickField(field);
+    // console.log(field);
   }
   
   render(){
 
     const newState = JSON.parse(JSON.stringify(this.props.state));
-// console.log(newState);
     const classField = this.props.classNames.join(" ");
-
-    const word = newState.word.toUpperCase();
+    const word = newState.word;
 
     // random distribution of array elements
     let i = word.length;
     let j = i-1;
-    // let randomWord = [];
        
     return <div className="container">
       <div>
@@ -31,12 +29,14 @@ class RandomWord extends React.Component {
       <div className="word">
         {
           newState.lettersWord.map((p,i) => {
+            // console.log(p,i);
             return (
               <div
               className={classField} 
               key={i} 
-              onMouseDown={(i)=>this.handleClickField(i)}>
+              onMouseDown={()=>this.handleClickField(i)}>
                   {newState.lettersWord[i].char}
+                  
               </div>
             )
               

@@ -9608,7 +9608,7 @@ module.exports = getHostComponentFromComposite;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(84);
-module.exports = __webpack_require__(186);
+module.exports = __webpack_require__(187);
 
 
 /***/ }),
@@ -9632,7 +9632,7 @@ var _RandomWord = __webpack_require__(185);
 
 var _RandomWord2 = _interopRequireDefault(_RandomWord);
 
-var _Letter = __webpack_require__(191);
+var _Letter = __webpack_require__(186);
 
 var _Letter2 = _interopRequireDefault(_Letter);
 
@@ -9655,7 +9655,7 @@ var App = function (_React$Component) {
     _this.componentWillMount = function () {
       var newState = JSON.parse(JSON.stringify(_this.state));
 
-      newState.word = prompt("podaj słowo");
+      newState.word = prompt("podaj słowo").toUpperCase();
 
       var numberOfLetters = newState.word.length;
       var maxIndex = numberOfLetters - 1;
@@ -9678,10 +9678,18 @@ var App = function (_React$Component) {
     _this.clickField = function (indexElem) {
 
       var newState = JSON.parse(JSON.stringify(_this.state));
+      console.log(indexElem);
 
-      console.log("Działa kliknięcie");
-      newState.classField.push("drag"); //works for everyone!!! WRONG
+      //reset selected
+      newState.lettersWord = newState.lettersWord.map(function (field) {
+        return new _Letter2.default(field.index, field.char, false);
+      });
 
+      var currentField = newState.lettersWord[indexElem];
+
+      //set selected clicked field
+      newState.lettersWord[indexElem] = new _Letter2.default(currentField.index, currentField.char, true);
+      console.log(newState);
       _this.setState(newState);
     };
 
@@ -9696,14 +9704,11 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
 
       return _react2.default.createElement(_RandomWord2.default, {
         state: this.state,
         classNames: this.state.classField,
-        clickField: function clickField(id) {
-          return _this2.clickField(id);
-        }
+        clickField: this.clickField
       });
     }
   }]);
@@ -22209,6 +22214,7 @@ var RandomWord = function (_React$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickField = function (field) {
       _this.props.clickField(field);
+      // console.log(field);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -22218,15 +22224,12 @@ var RandomWord = function (_React$Component) {
       var _this2 = this;
 
       var newState = JSON.parse(JSON.stringify(this.props.state));
-      // console.log(newState);
       var classField = this.props.classNames.join(" ");
-
-      var word = newState.word.toUpperCase();
+      var word = newState.word;
 
       // random distribution of array elements
       var i = word.length;
       var j = i - 1;
-      // let randomWord = [];
 
       return _react2.default.createElement(
         'div',
@@ -22253,12 +22256,13 @@ var RandomWord = function (_React$Component) {
           'div',
           { className: 'word' },
           newState.lettersWord.map(function (p, i) {
+            // console.log(p,i);
             return _react2.default.createElement(
               'div',
               {
                 className: classField,
                 key: i,
-                onMouseDown: function onMouseDown(i) {
+                onMouseDown: function onMouseDown() {
                   return _this2.handleClickField(i);
                 } },
               newState.lettersWord[i].char
@@ -22276,16 +22280,6 @@ module.exports = RandomWord;
 
 /***/ }),
 /* 186 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22300,6 +22294,12 @@ function newLetter(index, char, selected) {
 }
 
 module.exports = newLetter;
+
+/***/ }),
+/* 187 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RandomWord from './RandomWord.jsx';
-import Letter from './Letter.jsx';
+import newLetter from './Letter.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class App extends React.Component {
   componentWillMount = () => {
     const newState = JSON.parse(JSON.stringify(this.state));
 
-    newState.word = prompt("podaj słowo"); 
+    newState.word = prompt("podaj słowo").toUpperCase(); 
     
     let numberOfLetters = newState.word.length;
     let maxIndex = numberOfLetters-1;
@@ -28,7 +28,7 @@ class App extends React.Component {
       let letter = wordArray.splice(nr,1)[0];
       
       newState.lettersWord.push(
-        new Letter(
+        new newLetter(
           index++,
           letter,
           false
@@ -37,7 +37,7 @@ class App extends React.Component {
       numberOfLetters--;      
     }
     newState.lettersWord.push(
-      new Letter(
+      new newLetter(
         newState.word.length,
         " ", 
         false
@@ -51,10 +51,27 @@ class App extends React.Component {
   clickField = (indexElem) => {
 
     const newState = JSON.parse(JSON.stringify(this.state));
+    console.log(indexElem);
 
-    console.log("Działa kliknięcie");
-    newState.classField.push("drag");//works for everyone!!! WRONG
+    //reset selected
+    newState.lettersWord = newState.lettersWord.map((field) =>
+      new newLetter(
+        field.index,
+        field.char,
+        false
+      )
+    )
 
+    const currentField = newState.lettersWord[indexElem];
+
+    //set selected clicked field
+    newState.lettersWord[indexElem] =
+      new newLetter(
+        currentField.index,
+        currentField.char,
+        true
+      )
+    console.log(newState);
     this.setState(newState);
   }
 
@@ -64,7 +81,7 @@ class App extends React.Component {
       <RandomWord 
         state={this.state}
         classNames={this.state.classField}
-        clickField={(id) => this.clickField(id)}
+        clickField={this.clickField}
       />
     )
   }
