@@ -9671,14 +9671,12 @@ var App = function (_React$Component) {
       }
       newState.lettersWord.push(new _Letter2.default(newState.word.length, " ", false));
 
-      console.log(newState);
       _this.setState(newState);
     };
 
-    _this.clickField = function (indexElem) {
+    _this.mouseDown = function (indexElem) {
 
       var newState = JSON.parse(JSON.stringify(_this.state));
-      console.log(indexElem);
 
       //reset selected
       newState.lettersWord = newState.lettersWord.map(function (field) {
@@ -9690,6 +9688,17 @@ var App = function (_React$Component) {
       //set selected clicked field
       newState.lettersWord[indexElem] = new _Letter2.default(currentField.index, currentField.char, true);
       console.log(newState);
+      _this.setState(newState);
+    };
+
+    _this.mouseUp = function (indexElem) {
+
+      var newState = JSON.parse(JSON.stringify(_this.state));
+
+      //reset selected
+      newState.lettersWord = newState.lettersWord.map(function (field) {
+        return new _Letter2.default(field.index, field.char, false);
+      });
       _this.setState(newState);
     };
 
@@ -9708,7 +9717,8 @@ var App = function (_React$Component) {
       return _react2.default.createElement(_RandomWord2.default, {
         state: this.state,
         classNames: this.state.classField,
-        clickField: this.clickField
+        mouseDown: this.mouseDown,
+        mouseUp: this.mouseUp
       });
     }
   }]);
@@ -22212,9 +22222,10 @@ var RandomWord = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickField = function (field) {
-      _this.props.clickField(field);
-      // console.log(field);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).call.apply(_ref, [this].concat(args))), _this), _this.mouseDown = function (field) {
+      _this.props.mouseDown(field);
+    }, _this.mouseUp = function (field) {
+      _this.props.mouseUp(field);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -22224,7 +22235,6 @@ var RandomWord = function (_React$Component) {
       var _this2 = this;
 
       var newState = JSON.parse(JSON.stringify(this.props.state));
-      var classField = this.props.classNames.join(" ");
       var word = newState.word;
 
       // random distribution of array elements
@@ -22256,14 +22266,22 @@ var RandomWord = function (_React$Component) {
           'div',
           { className: 'word' },
           newState.lettersWord.map(function (p, i) {
-            // console.log(p,i);
+            //read class from state
+            var classField = _this2.props.classNames.join(" ");
+            //add class "drag" cliced field
+            if (p.selected === true && p.char !== " ") {
+              classField += " drag";
+            }
             return _react2.default.createElement(
               'div',
               {
                 className: classField,
                 key: i,
                 onMouseDown: function onMouseDown() {
-                  return _this2.handleClickField(i);
+                  return _this2.mouseDown(i);
+                },
+                onMouseUp: function onMouseUp() {
+                  return _this2.mouseUp(i);
                 } },
               newState.lettersWord[i].char
             );

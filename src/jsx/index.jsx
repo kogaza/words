@@ -44,15 +44,13 @@ class App extends React.Component {
       )
     )
 
-    console.log(newState);
     this.setState(newState);
   }
 
-  clickField = (indexElem) => {
+  mouseDown = (indexElem) => {
 
     const newState = JSON.parse(JSON.stringify(this.state));
-    console.log(indexElem);
-
+   
     //reset selected
     newState.lettersWord = newState.lettersWord.map((field) =>
       new newLetter(
@@ -75,13 +73,30 @@ class App extends React.Component {
     this.setState(newState);
   }
 
+  mouseUp = (indexElem) => {
+
+    const newState = JSON.parse(JSON.stringify(this.state));
+
+    //reset selected
+    newState.lettersWord = newState.lettersWord.map((field) =>
+      new newLetter(
+        field.index,
+        field.char,
+        false
+      )
+    )
+    this.setState(newState);
+
+  }
+
   render(){
     
     return (
       <RandomWord 
         state={this.state}
         classNames={this.state.classField}
-        clickField={this.clickField}
+        mouseDown={this.mouseDown}
+        mouseUp={this.mouseUp}
       />
     )
   }
