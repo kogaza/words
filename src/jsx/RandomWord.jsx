@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 
 class RandomWord extends React.Component {
 
-  mouseDown = (field) => {
-    this.props.mouseDown(field);
+  mouseDownUp = (field,move) => {
+    this.props.mouseDownUp(field,move);
+    
   }
-  mouseUp = (field) => {
-    this.props.mouseUp(field);
+  mouseMove = (field,move) => {
+    this.props.mouseMove(field,move);
   }
   
   render(){
@@ -32,18 +33,22 @@ class RandomWord extends React.Component {
           newState.lettersWord.map((p,i) => {
             //read class from state
             let classField = this.props.classNames.join(" ");
+            let classFieldH2;
             //add class "drag" cliced field
             if(p.selected === true && p.char !== " "){
-              classField += " drag";
+              classFieldH2 += " drag";
             }
             return (
               <div
               className={classField} 
-              key={i} 
-              onMouseDown={()=>this.mouseDown(i)}
-              onMouseUp={()=>this.mouseUp(i)}>
+              key={i}>
+                <h2
+                className={classFieldH2}
+                onMouseDown={()=>this.mouseDownUp(i,"down")}
+                onMouseUp={()=>this.mouseDownUp(i,"up")}
+                onMouseMove={()=>this.mouseDownUp(i)}>
                   {newState.lettersWord[i].char}
-                  
+                </h2>
               </div>
             )
               

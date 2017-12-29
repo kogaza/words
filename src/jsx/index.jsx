@@ -47,7 +47,7 @@ class App extends React.Component {
     this.setState(newState);
   }
 
-  mouseDown = (indexElem) => {
+  mouseDownUp = (indexElem,move) => {
 
     const newState = JSON.parse(JSON.stringify(this.state));
    
@@ -61,32 +61,28 @@ class App extends React.Component {
     )
 
     const currentField = newState.lettersWord[indexElem];
-
     //set selected clicked field
-    newState.lettersWord[indexElem] =
-      new newLetter(
-        currentField.index,
-        currentField.char,
-        true
-      )
+    if(move === "down"){
+      newState.lettersWord[indexElem] =
+        new newLetter(
+          currentField.index,
+          currentField.char,
+          true
+        )
+    } else {
+      newState.lettersWord[indexElem] =
+        new newLetter(
+          currentField.index,
+          currentField.char,
+          false
+        )
+    }
     console.log(newState);
     this.setState(newState);
   }
 
-  mouseUp = (indexElem) => {
-
-    const newState = JSON.parse(JSON.stringify(this.state));
-
-    //reset selected
-    newState.lettersWord = newState.lettersWord.map((field) =>
-      new newLetter(
-        field.index,
-        field.char,
-        false
-      )
-    )
-    this.setState(newState);
-
+  mouseMove = (element) => {
+    console.log("rusza się");
   }
 
   render(){
@@ -95,8 +91,8 @@ class App extends React.Component {
       <RandomWord 
         state={this.state}
         classNames={this.state.classField}
-        mouseDown={this.mouseDown}
-        mouseUp={this.mouseUp}
+        mouseDownUp={this.mouseDownUp}
+        mouseMove={this.mouseMove}
       />
     )
   }

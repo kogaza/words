@@ -9674,7 +9674,7 @@ var App = function (_React$Component) {
       _this.setState(newState);
     };
 
-    _this.mouseDown = function (indexElem) {
+    _this.mouseDownUp = function (indexElem, move) {
 
       var newState = JSON.parse(JSON.stringify(_this.state));
 
@@ -9684,22 +9684,18 @@ var App = function (_React$Component) {
       });
 
       var currentField = newState.lettersWord[indexElem];
-
       //set selected clicked field
-      newState.lettersWord[indexElem] = new _Letter2.default(currentField.index, currentField.char, true);
+      if (move === "down") {
+        newState.lettersWord[indexElem] = new _Letter2.default(currentField.index, currentField.char, true);
+      } else {
+        newState.lettersWord[indexElem] = new _Letter2.default(currentField.index, currentField.char, false);
+      }
       console.log(newState);
       _this.setState(newState);
     };
 
-    _this.mouseUp = function (indexElem) {
-
-      var newState = JSON.parse(JSON.stringify(_this.state));
-
-      //reset selected
-      newState.lettersWord = newState.lettersWord.map(function (field) {
-        return new _Letter2.default(field.index, field.char, false);
-      });
-      _this.setState(newState);
+    _this.mouseMove = function (element) {
+      console.log("rusza się");
     };
 
     _this.state = {
@@ -9717,8 +9713,8 @@ var App = function (_React$Component) {
       return _react2.default.createElement(_RandomWord2.default, {
         state: this.state,
         classNames: this.state.classField,
-        mouseDown: this.mouseDown,
-        mouseUp: this.mouseUp
+        mouseDownUp: this.mouseDownUp,
+        mouseMove: this.mouseMove
       });
     }
   }]);
@@ -22222,10 +22218,10 @@ var RandomWord = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).call.apply(_ref, [this].concat(args))), _this), _this.mouseDown = function (field) {
-      _this.props.mouseDown(field);
-    }, _this.mouseUp = function (field) {
-      _this.props.mouseUp(field);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RandomWord.__proto__ || Object.getPrototypeOf(RandomWord)).call.apply(_ref, [this].concat(args))), _this), _this.mouseDownUp = function (field, move) {
+      _this.props.mouseDownUp(field, move);
+    }, _this.mouseMove = function (field, move) {
+      _this.props.mouseMove(field, move);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -22268,22 +22264,31 @@ var RandomWord = function (_React$Component) {
           newState.lettersWord.map(function (p, i) {
             //read class from state
             var classField = _this2.props.classNames.join(" ");
+            var classFieldH2 = void 0;
             //add class "drag" cliced field
             if (p.selected === true && p.char !== " ") {
-              classField += " drag";
+              classFieldH2 += " drag";
             }
             return _react2.default.createElement(
               'div',
               {
                 className: classField,
-                key: i,
-                onMouseDown: function onMouseDown() {
-                  return _this2.mouseDown(i);
-                },
-                onMouseUp: function onMouseUp() {
-                  return _this2.mouseUp(i);
-                } },
-              newState.lettersWord[i].char
+                key: i },
+              _react2.default.createElement(
+                'h2',
+                {
+                  className: classFieldH2,
+                  onMouseDown: function onMouseDown() {
+                    return _this2.mouseDownUp(i, "down");
+                  },
+                  onMouseUp: function onMouseUp() {
+                    return _this2.mouseDownUp(i, "up");
+                  },
+                  onMouseMove: function onMouseMove() {
+                    return _this2.mouseDownUp(i);
+                  } },
+                newState.lettersWord[i].char
+              )
             );
           })
         )

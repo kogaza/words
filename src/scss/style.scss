@@ -28,7 +28,11 @@ $size: 50px;
   align-items: center;
   font-size: $size/2;
   font-weight: 700;
+  cursor: pointer;
 }
 .drag{
-  background-color: rgba(79, 79, 255, 0.57);
+  color: rgba(79, 79, 255, 0.967);
+  position: relative;
+  // top: 100;
+  left: 100;
 }

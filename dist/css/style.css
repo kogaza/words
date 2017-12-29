@@ -25,7 +25,10 @@
   justify-content: center;
   align-items: center;
   font-size: 25px;
-  font-weight: 700; }
+  font-weight: 700;
+  cursor: pointer; }
 
 .drag {
-  background-color: rgba(79, 79, 255, 0.57); }
+  color: rgba(79, 79, 255, 0.967);
+  position: relative;
+  left: 100; }
